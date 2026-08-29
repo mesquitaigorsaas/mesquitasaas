@@ -277,6 +277,18 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
     background: var(--acao);
 }
 
+/* Cinco trabalhos numa grade de dois em dois deixariam o último
+   sozinho e torto. Este ocupa a linha inteira, e a lista dele vira
+   duas colunas para não sobrar vazio. */
+.trabalho.largo { grid-column: 1 / -1; }
+
+@media (min-width: 781px) {
+    .trabalho.largo ul {
+        columns: 2;
+        column-gap: 34px;
+    }
+}
+
 .trabalho .rodape-cartao { margin-top: auto; }
 
 .trabalho a.ver {
@@ -515,7 +527,7 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
         </div>
 
         <div class="selos">
-            <span><b>4</b> projetos no ar</span>
+            <span><b>5</b> projetos no ar</span>
             <span><b>2 a 5 dias</b> para entregar</span>
             <span><b>Aqui de Alfenas</b> — atendimento pessoal</span>
         </div>
@@ -605,6 +617,26 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
                 <div class="rodape-cartao">
                     <a class="ver" href="https://acheimusico.online/"
                        target="_blank" rel="noopener">acheimusico.online →</a>
+                </div>
+            </article>
+
+            <article class="trabalho largo">
+                <span class="etiqueta no-ar">No ar</span>
+                <h3>Grão Central — painel de gestão</h3>
+                <p>
+                    Sistema completo para distribuidora de insumos: o dono
+                    acompanha estoque, pedidos, fornecedores e financeiro numa
+                    tela só, em vez de três cadernos e uma planilha.
+                </p>
+                <ul>
+                    <li>Controle de estoque com entrada e saída</li>
+                    <li>Pedidos e acompanhamento de fornecedores</li>
+                    <li>Financeiro: o que entrou e o que tem a receber</li>
+                    <li>Acesso separado por funcionário</li>
+                </ul>
+                <div class="rodape-cartao">
+                    <a class="ver" href="https://mesquitaigorsaas.github.io/gestao/"
+                       target="_blank" rel="noopener">Ver o sistema →</a>
                 </div>
             </article>
 
