@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Igor Mesquita — Sites e sistemas para negócios de Alfenas e região</title>
+<meta name="description" content="Sites e sistemas sob medida para comércios e profissionais de Alfenas e região. Feitos aqui, com quem você fala direto.">
+
+<!-- Como a maioria vai abrir isto por link do WhatsApp, a prévia que
+     aparece lá é a primeira impressão. -->
+<meta property="og:title" content="Igor Mesquita — Sites e sistemas para o seu negócio">
+<meta property="og:description" content="Site próprio, no ar em poucos dias. Feito aqui em Alfenas, com quem você fala direto.">
+<meta property="og:type" content="website">
+
+<link rel="icon" type="image/png" href="assets/img/MesquitaSaaS.png">
+
+<style>
+/* =====================================================================
+   Página de vendas do Igor.
+
+   Ela é aberta quase sempre pelo celular, logo depois de uma conversa
+   presencial: por isso abre pelo essencial, mostra trabalho de verdade
+   e termina em botão de WhatsApp. Nada de formulário — quem já falou
+   com você não quer preencher campo, quer continuar a conversa.
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    /* Tiradas da logo: fundo azul-noite, e o degradê do "MS" indo do
+       ciano ao azul. O laranja saiu — não tinha relação com a marca. */
+    --noite: #1b2242;
+    --noite-fundo: #141a33;
+    --noite-clara: #2a3360;
+    --papel: #ffffff;
+    --areia: #f4f6f9;
+    --tinta: #16212e;
+    --tinta-suave: #52627a;
+    --linha: #e2e8f0;
+    --acao: #3f7ae8;
+    --acao-escura: #2f63c9;
+    --ciano: #2fd0d4;
+    --degrade: linear-gradient(135deg, #2fd0d4 0%, #3f7ae8 100%);
+    --zap: #1f9d55;
+    --zap-escuro: #177a42;
+
+    --titulo: 'Sora', system-ui, sans-serif;
+    --texto: 'Inter', system-ui, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--papel);
+    color: var(--tinta);
+    font-family: var(--texto);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+.container { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
+
+h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02em; }
+
+/* ---------- Botões ---------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--texto);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 16px 30px;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.15s, background-color 0.2s;
+}
+
+.btn:active { transform: translateY(1px); }
+
+.btn-zap { background: var(--zap); color: #fff; }
+.btn-zap:hover { background: var(--zap-escuro); }
+
+.btn-acao { background: var(--degrade); color: #fff; }
+.btn-acao:hover { filter: brightness(1.08); }
+
+.btn-linha { border-color: rgba(255,255,255,0.35); color: #fff; }
+.btn-linha:hover { background: rgba(255,255,255,0.1); }
+
+.btn-escuro { border-color: var(--linha); color: var(--tinta); background: #fff; }
+.btn-escuro:hover { border-color: var(--noite); }
+
+/* ---------- Topo ---------- */
+.topo {
+    background: var(--noite);
+    color: #fff;
+    padding: 26px 0 76px;
+}
+
+.topo-barra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 62px;
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--titulo);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* A logo é um quadrado com o nome escrito embaixo. Aqui só interessa
+   o "MS": a caixa recorta o miolo e o nome vem ao lado, em texto —
+   assim ele continua legível em qualquer tamanho de tela. */
+.marca-selo {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--noite-clara);
+    display: block;
+}
+
+.marca-selo img {
+    position: absolute;
+    width: 210%;
+    height: 210%;
+    max-width: none;
+    left: -49%;
+    top: -42%;
+}
+
+.marca-nome span { color: var(--ciano); }
+
+.topo-zap {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 9px 16px;
+    border-radius: 8px;
+}
+
+.topo-zap:hover { border-color: var(--acao); color: #fff; }
+
+.chapeu {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--acao);
+    margin-bottom: 18px;
+}
+
+.topo h1 {
+    font-size: clamp(2rem, 5.2vw, 3.3rem);
+    font-weight: 700;
+    max-width: 15em;
+    margin-bottom: 22px;
+}
+
+.topo p.linha-fina {
+    font-size: 1.12rem;
+    color: #a9b8cc;
+    max-width: 34em;
+    margin-bottom: 34px;
+}
+
+.topo-acoes { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.selos {
+    display: flex;
+    gap: 26px;
+    flex-wrap: wrap;
+    margin-top: 46px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    font-size: 0.9rem;
+    color: #a9b8cc;
+}
+
+.selos span { display: flex; align-items: center; gap: 9px; }
+.selos b { color: #fff; font-weight: 600; }
+
+/* ---------- Seções ---------- */
+.secao { padding: 76px 0; }
+.secao.areia { background: var(--areia); }
+
+.titulo-secao { margin-bottom: 46px; max-width: 42em; }
+
+.titulo-secao .chapeu { color: var(--acao); }
+
+.titulo-secao h2 {
+    font-size: clamp(1.6rem, 3.6vw, 2.3rem);
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.titulo-secao p { color: var(--tinta-suave); }
+
+/* ---------- Trabalhos ---------- */
+.grade-trabalhos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 26px;
+}
+
+@media (max-width: 780px) { .grade-trabalhos { grid-template-columns: 1fr; } }
+
+.trabalho {
+    background: #fff;
+    border: 1px solid var(--linha);
+    border-radius: 14px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.trabalho:hover {
+    border-color: #c3cfdd;
+    box-shadow: 0 12px 30px rgba(13, 27, 42, 0.07);
+}
+
+.trabalho .etiqueta {
+    align-self: flex-start;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 11px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+}
+
+.etiqueta.no-ar { background: #dcfce7; color: #15803d; }
+.etiqueta.pronto { background: #e0e7ff; color: #3730a3; }
+
+.trabalho h3 { font-size: 1.28rem; font-weight: 700; margin-bottom: 8px; }
+
+.trabalho p { color: var(--tinta-suave); font-size: 0.97rem; margin-bottom: 18px; }
+
+.trabalho ul {
+    list-style: none;
+    margin-bottom: 24px;
+    font-size: 0.93rem;
+    color: var(--tinta-suave);
+}
+
+.trabalho li { padding-left: 22px; position: relative; margin-bottom: 7px; }
+
+.trabalho li::before {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 9px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--acao);
+}
+
+.trabalho .rodape-cartao { margin-top: auto; }
+
+.trabalho a.ver {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--noite);
+    text-decoration: none;
+    border-bottom: 2px solid var(--acao);
+    padding-bottom: 2px;
+}
+
+.trabalho a.ver:hover { color: var(--acao); }
+
+
+/* ---------- Preços ---------- */
+.grade-precos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+@media (max-width: 900px) { .grade-precos { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; } }
+
+.plano {
+    background: #fff;
+    border: 1px solid var(--linha);
+    border-radius: 14px;
+    padding: 30px 26px;
+    display: flex;
+    flex-direction: column;
+}
+
+.plano.destaque {
+    border: 2px solid var(--noite);
+    position: relative;
+}
+
+.plano.destaque::before {
+    content: 'Mais pedido';
+    position: absolute;
+    top: -12px;
+    left: 26px;
+    background: var(--noite);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+.plano h3 { font-size: 1.15rem; margin-bottom: 6px; }
+
+.plano .para { font-size: 0.88rem; color: var(--tinta-suave); margin-bottom: 20px; }
+
+.plano .valor {
+    font-family: var(--titulo);
+    font-size: 2.1rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.plano .valor small {
+    display: block;
+    font-family: var(--texto);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--tinta-suave);
+    letter-spacing: 0.02em;
+    margin-bottom: 2px;
+}
+
+.plano .mensalidade {
+    font-family: var(--titulo);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--acao);
+    margin-top: 4px;
+}
+
+/* Explica a mensalidade dentro do cartão, onde a dúvida nasce — e não
+   três seções abaixo, quando a pessoa já decidiu que é caro. */
+.inclui-mensal {
+    background: var(--areia);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 24px;
+    font-size: 0.88rem;
+    line-height: 1.55;
+}
+
+.inclui-mensal b {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--tinta);
+    margin-bottom: 6px;
+}
+
+.inclui-mensal span { color: var(--tinta-suave); }
+
+.plano .prazo {
+    font-size: 0.85rem;
+    color: var(--tinta-suave);
+    padding: 14px 0 18px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid var(--linha);
+}
+
+.plano ul { list-style: none; font-size: 0.94rem; color: var(--tinta-suave); margin-bottom: 26px; }
+
+.plano li { padding-left: 24px; position: relative; margin-bottom: 9px; }
+
+.plano li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--zap);
+    font-weight: 700;
+}
+
+.plano .btn { margin-top: auto; width: 100%; }
+
+.aviso-preco {
+    text-align: center;
+    color: var(--tinta-suave);
+    font-size: 0.92rem;
+    margin-top: 30px;
+}
+
+/* ---------- Como funciona ---------- */
+.passos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+
+@media (max-width: 860px) { .passos { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .passos { grid-template-columns: 1fr; } }
+
+.passo .numero {
+    font-family: var(--titulo);
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--acao);
+    line-height: 1;
+    margin-bottom: 12px;
+}
+
+.passo h3 { font-size: 1.05rem; margin-bottom: 6px; }
+.passo p { font-size: 0.93rem; color: var(--tinta-suave); }
+
+/* ---------- Chamada final ---------- */
+.chamada {
+    background: var(--noite);
+    color: #fff;
+    text-align: center;
+    padding: 84px 0;
+}
+
+.chamada h2 { font-size: clamp(1.7rem, 4vw, 2.5rem); margin-bottom: 16px; }
+
+.chamada p { color: #a9b8cc; max-width: 32em; margin: 0 auto 32px; }
+
+/* ---------- Rodapé ---------- */
+.rodape {
+    background: var(--noite-fundo);
+    color: #7d8ea3;
+    padding: 26px 0;
+    font-size: 0.88rem;
+}
+
+.rodape .container {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.rodape a { color: #a9b8cc; text-decoration: none; }
+.rodape a:hover { color: #fff; }
+
+/* ---------- Botão flutuante do WhatsApp ---------- */
+.zap-flutuante {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 100;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: var(--zap);
+    box-shadow: 0 8px 24px rgba(31, 157, 85, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform 0.2s;
+}
+
+.zap-flutuante:hover { transform: scale(1.07); }
+.zap-flutuante svg { width: 30px; height: 30px; fill: #fff; }
+</style>
+</head>
+<body>
+
+<!-- =====================================================================
+     TOPO
+     ===================================================================== -->
+<header class="topo">
+    <div class="container">
+        <div class="topo-barra">
+            <a href="#" class="marca">
+                <span class="marca-selo">
+                    <img src="assets/img/MesquitaSaaS.png" alt="Mesquita SaaS">
+                </span>
+                <span class="marca-nome">Mesquita <span>SaaS</span></span>
+            </a>
+            <a href="https://wa.me/5531999347032?text=Ol%C3%A1%20Igor%21%20Vi%20sua%20p%C3%A1gina%20e%20queria%20falar%20sobre%20um%20site."
+               class="topo-zap" target="_blank" rel="noopener">Falar no WhatsApp</a>
+        </div>
+
+        <span class="chapeu">Alfenas e região</span>
+
+        <h1>Seu negócio com site próprio, no ar em poucos dias.</h1>
+
+        <p class="linha-fina">
+            Sites e sistemas feitos sob medida para comércios e profissionais
+            daqui. Sem modelo pronto, sem mensalidade de plataforma e sem
+            atendimento por robô — você fala comigo direto.
+        </p>
+
+        <div class="topo-acoes">
+            <a href="https://wa.me/5531999347032?text=Ol%C3%A1%20Igor%21%20Quero%20um%20or%C3%A7amento%20de%20site%20para%20o%20meu%20neg%C3%B3cio."
+               class="btn btn-acao" target="_blank" rel="noopener">Pedir um orçamento</a>
+            <a href="#trabalhos" class="btn btn-linha">Ver trabalhos feitos</a>
+        </div>
+
+        <div class="selos">
+            <span><b>4</b> projetos no ar</span>
+            <span><b>2 a 5 dias</b> para entregar</span>
+            <span><b>Aqui de Alfenas</b> — atendimento pessoal</span>
+        </div>
+    </div>
+</header>
+
+<!-- =====================================================================
+     TRABALHOS
+     ===================================================================== -->
+<section class="secao" id="trabalhos">
+    <div class="container">
+        <div class="titulo-secao">
+            <span class="chapeu">Trabalhos</span>
+            <h2>Coisas que eu construí e estão funcionando</h2>
+            <p>Não é portfólio de modelo pronto. É sistema no ar, com gente usando.</p>
+        </div>
+
+        <div class="grade-trabalhos">
+
+            <article class="trabalho">
+                <span class="etiqueta no-ar">No ar</span>
+                <h3>Guia Comercial Alfenas e Região</h3>
+                <p>
+                    Portal onde o morador acha comércio da região por cidade e
+                    categoria. O lojista cria a conta, monta o próprio anúncio e
+                    acompanha quantas pessoas viram.
+                </p>
+                <ul>
+                    <li>Cadastro com verificação de CPF/CNPJ</li>
+                    <li>Painel de administração com controle de planos</li>
+                    <li>Fotos, horários, mapa e botão de WhatsApp</li>
+                </ul>
+                <div class="rodape-cartao">
+                    <a class="ver" href="https://mesquitaigorsaas.github.io/comercioalfenas/"
+                       target="_blank" rel="noopener">Ver o site →</a>
+                </div>
+            </article>
+
+            <article class="trabalho">
+                <span class="etiqueta no-ar">No ar</span>
+                <h3>Rogério Cunha — Advogado e Escritor</h3>
+                <p>
+                    Site de autor: vitrine dos livros com venda direta pelo
+                    WhatsApp, área de textos e espaço para vídeos.
+                </p>
+                <ul>
+                    <li>Layout sob medida, feito do zero</li>
+                    <li>Vídeos do YouTube sem deixar a página pesada</li>
+                    <li>Leitura confortável no celular</li>
+                </ul>
+                <div class="rodape-cartao">
+                    <a class="ver" href="https://mesquitaigorsaas.github.io/rogeriocunha/"
+                       target="_blank" rel="noopener">Ver o site →</a>
+                </div>
+            </article>
+
+            <article class="trabalho">
+                <span class="etiqueta no-ar">No ar</span>
+                <h3>Achei Vaga — sistema para estacionamentos</h3>
+                <p>
+                    Controle de entrada e saída, cálculo automático do valor e
+                    cupom para o cliente — pelo celular do manobrista.
+                </p>
+                <ul>
+                    <li>Cupom enviado por WhatsApp ou impresso</li>
+                    <li>Relatório de faturamento do dia</li>
+                    <li>Vários estacionamentos, cada um com seus dados separados</li>
+                </ul>
+                <div class="rodape-cartao">
+                    <a class="ver" href="https://mesquitaigorsaas.github.io/estacionamento/"
+                       target="_blank" rel="noopener">Ver o sistema →</a>
+                </div>
+            </article>
+
+            <article class="trabalho">
+                <span class="etiqueta no-ar">No ar</span>
+                <h3>Achei Músico</h3>
+                <p>
+                    Quem procura música para um evento encontra quem toca perto de
+                    si — por instrumento, estilo e distância real.
+                </p>
+                <ul>
+                    <li>Busca por proximidade entre cidades</li>
+                    <li>Perfil com fotos, repertório e contato</li>
+                    <li>Assinatura anual do músico</li>
+                </ul>
+                <div class="rodape-cartao">
+                    <a class="ver" href="https://acheimusico.online/"
+                       target="_blank" rel="noopener">acheimusico.online →</a>
+                </div>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-- =====================================================================
+     PREÇOS
+
+     ATENÇÃO IGOR: confira estes valores antes de mandar a página para
+     alguém. São sugestões, não regra. Se achar baixo, suba — o pior
+     erro no começo é cobrar pouco e ficar preso a um preço que não
+     paga o seu tempo.
+     ===================================================================== -->
+<section class="secao areia" id="precos">
+    <div class="container">
+        <div class="titulo-secao">
+            <span class="chapeu">Preços</span>
+            <h2>Quanto custa</h2>
+            <p>Preço fechado antes de começar. Sem surpresa no fim e sem mensalidade obrigatória.</p>
+        </div>
+
+        <div class="grade-precos">
+
+            <div class="plano">
+                <h3>Landing Page</h3>
+                <p class="para">Para quem quer presença simples e direta</p>
+                <div class="valor"><small>a partir de</small>R$ 690</div>
+                <p class="prazo">Pronto em até 2 dias<br><strong>50% para começar · 50% na entrega</strong></p>
+                <ul>
+                    <li>Uma página completa</li>
+                    <li>Fotos, textos e endereço no mapa</li>
+                    <li>Botão de WhatsApp</li>
+                    <li>Funciona bem no celular</li>
+                    <li>Endereço próprio na internet</li>
+                </ul>
+
+                <div class="inclui-mensal">
+                    <b>Já vai incluso</b>
+                    <span>Hospedagem, publicação e uma rodada de ajustes depois de pronto. Depois disso, manutenção só se você quiser — R$ 70/mês.</span>
+                </div>
+                <a href="https://wa.me/5531999347032?text=Ol%C3%A1%20Igor%21%20Tenho%20interesse%20na%20Landing%20Page."
+                   class="btn btn-escuro" target="_blank" rel="noopener">Quero este</a>
+            </div>
+
+            <div class="plano destaque">
+                <h3>Site completo</h3>
+                <p class="para">Para quem quer se apresentar bem e vender</p>
+                <div class="valor"><small>a partir de</small>R$ 980</div>
+                <p class="prazo">Pronto em até 5 dias<br><strong>50% para começar · 50% na entrega</strong></p>
+                <ul>
+                    <li>Várias páginas, à sua escolha</li>
+                    <li>Catálogo de produtos ou serviços</li>
+                    <li>Galeria de fotos e vídeos</li>
+                    <li>Layout feito do zero para o seu negócio</li>
+                    <li>Preparado para aparecer no Google</li>
+                    <li>Uma rodada de ajustes incluída</li>
+                </ul>
+
+                <div class="inclui-mensal">
+                    <b>Já vai incluso</b>
+                    <span>Hospedagem e publicação por minha conta. Manutenção depois é opcional — R$ 70/mês para eu atualizar fotos, textos e preços.</span>
+                </div>
+                <a href="https://wa.me/5531999347032?text=Ol%C3%A1%20Igor%21%20Tenho%20interesse%20no%20Site%20Completo."
+                   class="btn btn-acao" target="_blank" rel="noopener">Quero este</a>
+            </div>
+
+            <div class="plano">
+                <h3>Sistema empresarial</h3>
+                <p class="para">Para quem precisa organizar o dia a dia</p>
+                <div class="valor"><small>a partir de</small>R$ 1.890</div>
+                <p class="mensalidade">+ R$ 90/mês enquanto usar</p>
+                <p class="prazo">Prazo conforme o tamanho<br><strong>50% para começar · 50% na entrega</strong></p>
+                <ul>
+                    <li>Cadastro de clientes e serviços</li>
+                    <li>Controle de entrada, saída e caixa</li>
+                    <li>Relatórios do que entrou e saiu</li>
+                    <li>Acesso separado para cada funcionário</li>
+                    <li>Treinamento da equipe incluído</li>
+                </ul>
+
+                <div class="inclui-mensal">
+                    <b>Na mensalidade entra</b>
+                    <span>
+                        Hospedagem, cópia de segurança dos seus dados e eu disponível
+                        no WhatsApp — senha, funcionário novo, ajuste. Não é taxa: é o
+                        que mantém o sistema no ar e você atendido.
+                    </span>
+                </div>
+                <a href="https://wa.me/5531999347032?text=Ol%C3%A1%20Igor%21%20Quero%20conversar%20sobre%20um%20sistema%20empresarial."
+                   class="btn btn-escuro" target="_blank" rel="noopener">Vamos conversar</a>
+            </div>
+
+        </div>
+
+        <p class="aviso-preco">
+            Pagamento em Pix ou cartão. Para os sites, a manutenção depois é
+            <strong>opcional</strong> — R$ 70/mês e eu atualizo fotos, textos e
+            preços quando você precisar. Nos sistemas ela já vem junto, porque é
+            o que mantém tudo funcionando.
+        </p>
+    </div>
+</section>
+
+<!-- =====================================================================
+     COMO FUNCIONA
+     ===================================================================== -->
+<section class="secao">
+    <div class="container">
+        <div class="titulo-secao">
+            <span class="chapeu">Como funciona</span>
+            <h2>Do primeiro contato ao site no ar</h2>
+        </div>
+
+        <div class="passos">
+            <div class="passo">
+                <div class="numero">1</div>
+                <h3>A gente conversa</h3>
+                <p>Pelo WhatsApp ou pessoalmente. Você me conta o que faz e o que precisa.</p>
+            </div>
+            <div class="passo">
+                <div class="numero">2</div>
+                <h3>Fecho o preço</h3>
+                <p>Digo quanto custa e em quantos dias fica pronto. Você paga metade
+                   para eu começar — a outra metade só quando estiver pronto.</p>
+            </div>
+            <div class="passo">
+                <div class="numero">3</div>
+                <h3>Você vê antes</h3>
+                <p>Mostro o site pronto para você aprovar. Ajusto o que não gostar.</p>
+            </div>
+            <div class="passo">
+                <div class="numero">4</div>
+                <h3>Vai para o ar</h3>
+                <p>Você aprova, paga a outra metade e eu publico. Depois te ensino a
+                   mexer e continuo por perto.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =====================================================================
+     CHAMADA FINAL
+     ===================================================================== -->
+<section class="chamada">
+    <div class="container">
+        <h2>Vamos colocar seu negócio no ar?</h2>
+        <p>
+            Me manda uma mensagem contando o que você faz. Respondo com uma ideia
+            do que dá para fazer e quanto custa — sem compromisso.
+        </p>
+        <a href="https://wa.me/5531999347032?text=Ol%C3%A1%20Igor%21%20Queria%20falar%20sobre%20um%20site%20para%20o%20meu%20neg%C3%B3cio."
+           class="btn btn-zap" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+    </div>
+</section>
+
+<footer class="rodape">
+    <div class="container">
+        <span>© 2026 Igor Mesquita · Alfenas, MG</span>
+        <a href="https://wa.me/5531999347032" target="_blank" rel="noopener">(31) 99934-7032</a>
+    </div>
+</footer>
+
+<!-- Botão sempre à mão: em página de venda, o caminho para falar com
+     você nunca pode estar a uma rolagem de distância. -->
+<a class="zap-flutuante" aria-label="Falar no WhatsApp"
+   href="https://wa.me/5531999347032?text=Ol%C3%A1%20Igor%21%20Vim%20pela%20sua%20p%C3%A1gina."
+   target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2"/></svg>
+</a>
+
+<script>
+    // Enquanto a logo não estiver em assets/img/MesquitaSaaS.png, o selo mostra
+    // as iniciais em vez do ícone de imagem quebrada.
+    const selo = document.querySelector('.marca-selo img');
+    selo && selo.addEventListener('error', () => {
+        const caixa = selo.parentElement;
+        caixa.textContent = 'MS';
+        caixa.style.cssText += 'display:flex;align-items:center;justify-content:center;font-family:var(--titulo);font-weight:700;color:var(--ciano);font-size:1.05rem;';
+    });
+</script>
+
+</body>
+</html>
