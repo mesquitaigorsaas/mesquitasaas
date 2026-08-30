@@ -358,21 +358,23 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
     border-bottom: 1px solid var(--linha);
 }
 
-/* O height:auto tem de vir junto: os atributos width/height do <img>
+/* Os prints aparecem inteiros, sem corte.
+   As proporções dos sete vão de 1,36 a 2,27, então moldura nenhuma
+   serve para todas se a imagem tiver de preencher o quadro: os largos
+   perdiam até 22% das laterais e os estreitos até 23% do topo e do pé.
+   Com o contain, cada print cabe por inteiro e a sobra vira respiro da
+   moldura — que é o certo aqui, porque o que se está mostrando é o
+   desenho da tela, e desenho cortado não mostra desenho nenhum.
+
+   O height:auto tem de vir junto: os atributos width/height do <img>
    valem como altura fixa e, sem isto, engoliriam o aspect-ratio. */
 .trabalho .capa img {
     display: block;
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
-    object-fit: cover;
-    object-position: top center;
+    object-fit: contain;
 }
-
-/* Print de sistema com menu lateral: ancorado à esquerda, para o corte
-   comer a área vazia da direita e não o menu, que é o que mostra do
-   que o sistema dá conta. */
-.trabalho .capa.esquerda img { object-position: top left; }
 
 .trabalho .etiqueta {
     align-self: flex-start;
@@ -826,7 +828,7 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
             </article>
 
             <article class="trabalho">
-                <span class="capa esquerda">
+                <span class="capa">
                     <img src="assets/img/trabalhos/achei-vaga.webp"
                          alt="Tela do Achei Vaga, sistema para estacionamentos"
                          width="997" height="439" loading="lazy">
