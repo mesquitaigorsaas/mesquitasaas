@@ -349,6 +349,14 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
 
 .plano .para { font-size: 0.88rem; color: var(--tinta-suave); margin-bottom: 20px; }
 
+/* Lado a lado, os subtitulos tem comprimentos diferentes e um deles cai
+   para tres linhas. Sem altura reservada, o preco daquele plano desce e
+   os tres valores desalinham — que e justamente o que o cliente compara.
+   Empilhado, cada cartao e lido sozinho e a reserva nao faz falta. */
+@media (min-width: 901px) {
+    .plano .para { min-height: calc(3 * 0.88rem * 1.65); }
+}
+
 .plano .valor {
     font-family: var(--titulo);
     font-size: 2.1rem;
@@ -757,7 +765,7 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
 
             <div class="plano">
                 <h3>Sistema empresarial</h3>
-                <p class="para">Para quem precisa organizar o dia a dia</p>
+                <p class="para">Todos os setores da sua empresa movimentados e registrados em um só lugar</p>
                 <div class="valor"><small>a partir de</small>R$ 1.890</div>
                 <p class="mensalidade">+ R$ 90/mês enquanto usar</p>
                 <p class="prazo">Prazo conforme o tamanho<br><strong>50% para começar · 50% na entrega</strong></p>
