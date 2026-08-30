@@ -1066,9 +1066,17 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
     const voltarTopo = document.querySelector('.voltar-topo');
     const topo = document.getElementById('topo');
 
+    // A margem negativa de 300px encolhe a área de observação pelo alto,
+    // fazendo a setinha acender 300px antes de o cabeçalho terminar.
+    // Sem ela, clicar em "Trabalhos" para no limite exato entre o
+    // cabeçalho e a seção — e no fio da navalha o cabeçalho ainda conta
+    // como visível, deixando a setinha apagada justo depois do salto.
+    // Como a folga é relativa ao fim do cabeçalho, vale para qualquer
+    // altura de tela: no celular o cabeçalho é mais alto, e a setinha
+    // continua acendendo 300px antes de a primeira seção chegar.
     new IntersectionObserver(([entrada]) => {
         voltarTopo.classList.toggle('aparece', !entrada.isIntersecting);
-    }).observe(topo);
+    }, { rootMargin: '-300px 0px 0px 0px' }).observe(topo);
 </script>
 
 </body>
