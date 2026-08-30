@@ -297,6 +297,12 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
 
 .titulo-secao { margin-bottom: 46px; max-width: 42em; }
 
+/* A âncora fica no título, não na seção. A seção tem 76px de respiro
+   antes do título, e parar na borda dela deixava o título caído no meio
+   da tela, longe de onde o olho procura. A folga curta acima evita que
+   o título fique colado na beirada. */
+.titulo-secao[id] { scroll-margin-top: 30px; }
+
 .titulo-secao .chapeu { color: var(--acao); }
 
 .titulo-secao h2 {
@@ -694,9 +700,9 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
 <!-- =====================================================================
      TRABALHOS
      ===================================================================== -->
-<section class="secao" id="trabalhos">
+<section class="secao">
     <div class="container">
-        <div class="titulo-secao">
+        <div class="titulo-secao" id="trabalhos">
             <span class="chapeu">Trabalhos</span>
             <h2>Coisas que eu construí e estão funcionando</h2>
             <p>Não é portfólio de modelo pronto. É sistema que eu construí do zero — entre e mexa à vontade.</p>
@@ -855,9 +861,9 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
 <!-- =====================================================================
      PREÇOS
      ===================================================================== -->
-<section class="secao areia" id="precos">
+<section class="secao areia">
     <div class="container">
-        <div class="titulo-secao">
+        <div class="titulo-secao" id="precos">
             <span class="chapeu">Preços</span>
             <h2>Quanto custa</h2>
             <p>Preço fechado antes de começar. Sem surpresa no fim e sem mensalidade obrigatória.</p>
