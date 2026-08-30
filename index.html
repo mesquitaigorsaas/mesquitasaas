@@ -131,16 +131,19 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
    sozinha, para a proporção nunca esticar. */
 .marca-selo { display: block; flex-shrink: 0; }
 
+/* Tamanho pedido pelo Igor: 216x48. A proporção do arquivo é 4,175 e
+   216/48 dá 4,5, então a logo fica 8% mais larga do que o original.
+   Decisão dele, tomada com o número na mão. */
 .marca-selo img {
     display: block;
-    height: 38px;
-    width: auto;
+    width: 216px;
+    height: 48px;
 }
 
 /* Em tela estreita a logo encolhe junto, para não empurrar o botão
    do WhatsApp para baixo. */
 @media (max-width: 520px) {
-    .marca-selo img { height: 30px; }
+    .marca-selo img { width: 171px; height: 38px; }
 }
 
 /* ---------- Menu do topo ---------- */
