@@ -43,6 +43,16 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* Rolagem suave nos links de âncora: a página desliza até a seção em vez
+   de pular seco. Quem pediu para reduzir animação nas preferências do
+   sistema continua com o salto direto — para essas pessoas o movimento
+   pode causar enjoo de verdade. */
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+}
+
 body {
     background: var(--papel);
     color: var(--tinta);
@@ -97,6 +107,7 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
 }
 
 .topo-barra {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -130,6 +141,102 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
    do WhatsApp para baixo. */
 @media (max-width: 520px) {
     .marca-selo img { height: 30px; }
+}
+
+/* ---------- Menu do topo ---------- */
+/* Só dois atalhos, e os dois descem na própria página. Numa página de
+   venda, link que leva para fora é vazamento; estes encurtam o caminho
+   até o que a pessoa veio ver. */
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+}
+
+.menu a:not(.topo-zap) {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #cbd5e1;
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.menu a:not(.topo-zap):hover {
+    color: #fff;
+    border-bottom-color: var(--acao);
+}
+
+/* Botão sanduíche: escondido no computador, aparece quando a barra fica
+   estreita demais para o logo, os dois links e o botão lado a lado. */
+.menu-botao {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 42px;
+    height: 38px;
+    padding: 0;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.menu-botao span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: #cbd5e1;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+/* Aberto, as três barras viram um X: o mesmo botão que abre, fecha. */
+.menu-botao.aberto span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-botao.aberto span:nth-child(2) { opacity: 0; }
+.menu-botao.aberto span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 780px) {
+    .menu-botao { display: flex; }
+
+    /* No celular o menu vira uma gaveta abaixo da barra. O botão do
+       WhatsApp desce junto: na largura do telefone ele não cabe ao lado
+       do logo, e o botão verde flutuante já garante o contato a
+       qualquer momento. */
+    .menu {
+        display: none;
+        position: absolute;
+        top: calc(100% + 14px);
+        left: 0;
+        right: 0;
+        z-index: 60;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        padding: 10px;
+        background: var(--noite-clara);
+        border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 12px;
+        box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    }
+
+    .menu.aberto { display: flex; }
+
+    .menu a:not(.topo-zap) {
+        padding: 12px 14px;
+        border-bottom: none;
+        border-radius: 8px;
+    }
+
+    .menu a:not(.topo-zap):hover {
+        border-bottom-color: transparent;
+        background: rgba(255,255,255,0.08);
+    }
+
+    .menu .topo-zap { margin-top: 6px; text-align: center; }
 }
 
 .topo-zap {
@@ -502,6 +609,34 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
 
 .zap-flutuante:hover { transform: scale(1.07); }
 .zap-flutuante svg { width: 30px; height: 30px; fill: #fff; }
+
+/* ---------- Setinha de voltar ao topo ---------- */
+/* Fica empilhada acima do botão do WhatsApp, para os dois não brigarem
+   pelo mesmo canto. Só aparece depois que a pessoa rolou: lá em cima
+   ela seria um botão que não faz nada. */
+.voltar-topo {
+    position: fixed;
+    right: 20px;
+    bottom: 88px;
+    z-index: 100;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(27, 34, 66, 0.92);
+    border: 1px solid rgba(255,255,255,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s, visibility 0.25s, background-color 0.2s;
+}
+
+.voltar-topo.aparece { opacity: 1; visibility: visible; }
+.voltar-topo:hover { background: var(--noite-clara); }
+.voltar-topo svg { width: 20px; height: 20px; fill: #cbd5e1; }
+.voltar-topo:hover svg { fill: #fff; }
 </style>
 </head>
 <body>
@@ -509,17 +644,27 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
 <!-- =====================================================================
      TOPO
      ===================================================================== -->
-<header class="topo">
+<header class="topo" id="topo">
     <div class="container">
         <div class="topo-barra">
-            <a href="#" class="marca" aria-label="Mesquita SaaS">
+            <a href="#topo" class="marca" aria-label="Mesquita SaaS">
                 <span class="marca-selo">
                     <img src="assets/img/logoMesquitaSaaS.png" alt="Mesquita SaaS"
                          width="501" height="120">
                 </span>
             </a>
-            <a href="https://wa.me/5531999347032?text=Ol%C3%A1%20Igor%21%20Vi%20sua%20p%C3%A1gina%20e%20queria%20falar%20sobre%20um%20site."
-               class="topo-zap" target="_blank" rel="noopener">Falar no WhatsApp</a>
+
+            <button class="menu-botao" type="button" aria-label="Abrir menu"
+                    aria-expanded="false" aria-controls="menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="menu" id="menu">
+                <a href="#trabalhos">Trabalhos</a>
+                <a href="#precos">Valores</a>
+                <a href="https://wa.me/5531999347032?text=Ol%C3%A1%20Igor%21%20Vi%20sua%20p%C3%A1gina%20e%20queria%20falar%20sobre%20um%20site."
+                   class="topo-zap" target="_blank" rel="noopener">Falar no WhatsApp</a>
+            </nav>
         </div>
 
         <span class="chapeu">Atendimento em todo o Brasil</span>
@@ -565,7 +710,7 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
                          alt="Tela do Guia Comercial Alfenas e Região"
                          width="647" height="475" loading="lazy">
                 </span>
-                <span class="etiqueta no-ar">No ar</span>
+                <span class="etiqueta pronto">Demonstração</span>
                 <h3>Guia Comercial Alfenas e Região</h3>
                 <p>
                     Portal onde o morador acha comércio da região por cidade e
@@ -589,7 +734,7 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
                          alt="Tela do site do Rogério Cunha"
                          width="997" height="573" loading="lazy">
                 </span>
-                <span class="etiqueta no-ar">No ar</span>
+                <span class="etiqueta pronto">Demonstração</span>
                 <h3>Rogério Cunha — Advogado e Escritor</h3>
                 <p>
                     Site de autor: vitrine dos livros com venda direta pelo
@@ -612,7 +757,7 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
                          alt="Tela do Achei Vaga, sistema para estacionamentos"
                          width="997" height="439" loading="lazy">
                 </span>
-                <span class="etiqueta no-ar">No ar</span>
+                <span class="etiqueta pronto">Demonstração</span>
                 <h3>Achei Vaga — sistema para estacionamentos</h3>
                 <p>
                     Controle de entrada e saída, cálculo automático do valor e
@@ -658,7 +803,7 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
                          alt="Painel de gestão do Grão Central"
                          width="997" height="457" loading="lazy">
                 </span>
-                <span class="etiqueta no-ar">No ar</span>
+                <span class="etiqueta pronto">Demonstração</span>
                 <h3>Grão Central — painel de gestão</h3>
                 <p>
                     Sistema de gestão para distribuidora de insumos para pizzarias:
@@ -866,6 +1011,10 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2"/></svg>
 </a>
 
+<a class="voltar-topo" href="#topo" aria-label="Voltar ao início">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.6 4.9 11.7a1 1 0 0 0 1.4 1.4L11 8.4V19a1 1 0 1 0 2 0V8.4l4.7 4.7a1 1 0 0 0 1.4-1.4z"/></svg>
+</a>
+
 <script>
     // Se a logo não carregar, o topo escreve o nome em texto em vez de
     // mostrar um ícone de imagem quebrada.
@@ -875,6 +1024,51 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
         caixa.innerHTML = 'Mesquita <span style="color:var(--ciano)">SaaS</span>';
         caixa.style.cssText += 'font-family:var(--titulo);font-weight:700;color:#fff;font-size:1.15rem;';
     });
+
+    // Menu sanduíche do celular.
+    const menuBotao = document.querySelector('.menu-botao');
+    const menu = document.getElementById('menu');
+
+    function fecharMenu() {
+        menu.classList.remove('aberto');
+        menuBotao.classList.remove('aberto');
+        menuBotao.setAttribute('aria-expanded', 'false');
+        menuBotao.setAttribute('aria-label', 'Abrir menu');
+    }
+
+    menuBotao.addEventListener('click', () => {
+        const aberto = menu.classList.toggle('aberto');
+        menuBotao.classList.toggle('aberto', aberto);
+        menuBotao.setAttribute('aria-expanded', String(aberto));
+        menuBotao.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
+    });
+
+    // Escolheu um destino, a gaveta fecha sozinha — senão ela tapa
+    // justamente a seção para onde a pessoa acabou de mandar rolar.
+    menu.querySelectorAll('a').forEach(link => link.addEventListener('click', fecharMenu));
+
+    // Clique fora e tecla Esc também fecham.
+    document.addEventListener('click', evento => {
+        if (!menu.contains(evento.target) && !menuBotao.contains(evento.target)) fecharMenu();
+    });
+    document.addEventListener('keydown', evento => {
+        if (evento.key === 'Escape') fecharMenu();
+    });
+
+    // A setinha aparece quando o topo da página sai de vista.
+    //
+    // Quem observa é um observador de interseção, e não o evento de
+    // rolagem, porque ele acerta os três casos sozinho: quem rola normal,
+    // quem abre um link direto para uma seção — que chega com a página já
+    // rolada, sem nenhum evento ter acontecido — e quem recarrega no meio
+    // da página. Com evento de rolagem, esses dois últimos ficariam sem o
+    // atalho de volta até rolarem alguma coisa.
+    const voltarTopo = document.querySelector('.voltar-topo');
+    const topo = document.getElementById('topo');
+
+    new IntersectionObserver(([entrada]) => {
+        voltarTopo.classList.toggle('aparece', !entrada.isIntersecting);
+    }).observe(topo);
 </script>
 
 </body>
