@@ -6,3 +6,6 @@ desktop.ini
 # Configurações de editor
 .vscode/
 .idea/
+
+# Servidor local só para ver a página antes de publicar — não vai para o site
+.claude/

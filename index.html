@@ -12,7 +12,9 @@
 <meta property="og:description" content="Site próprio, no ar em poucos dias. Feito aqui em Alfenas, com quem você fala direto.">
 <meta property="og:type" content="website">
 
-<link rel="icon" type="image/png" href="assets/img/MesquitaSaaS.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon180.png">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon512.png">
 
 <style>
 /* =====================================================================
@@ -122,30 +124,22 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
     text-decoration: none;
 }
 
-/* A logo é um quadrado com o nome escrito embaixo. Aqui só interessa
-   o "MS": a caixa recorta o miolo e o nome vem ao lado, em texto —
-   assim ele continua legível em qualquer tamanho de tela. */
-.marca-selo {
-    position: relative;
-    width: 44px;
-    height: 44px;
-    border-radius: 11px;
-    overflow: hidden;
-    flex-shrink: 0;
-    background: var(--noite-clara);
-    display: block;
-}
+/* A logo já vem inteira: o "MS" e o nome ao lado, numa peça só. Então
+   não se recorta nada — fixa-se a altura e a largura acompanha
+   sozinha, para a proporção nunca esticar. */
+.marca-selo { display: block; flex-shrink: 0; }
 
 .marca-selo img {
-    position: absolute;
-    width: 210%;
-    height: 210%;
-    max-width: none;
-    left: -49%;
-    top: -42%;
+    display: block;
+    height: 38px;
+    width: auto;
 }
 
-.marca-nome span { color: var(--ciano); }
+/* Em tela estreita a logo encolhe junto, para não empurrar o botão
+   do WhatsApp para baixo. */
+@media (max-width: 520px) {
+    .marca-selo img { height: 30px; }
+}
 
 .topo-zap {
     font-size: 0.92rem;
@@ -239,6 +233,36 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
     box-shadow: 0 12px 30px rgba(13, 27, 42, 0.07);
 }
 
+/* Cada cartão abre com um print do sistema. Os prints vieram de
+   tamanhos diferentes, então a moldura tem proporção fixa e a imagem
+   preenche por cima, ancorada no topo — o que sobra é cortado pelo pé,
+   e a grade fica alinhada. A margem negativa leva a imagem até a
+   borda do cartão, por cima do respiro de 28px. */
+.trabalho .capa {
+    display: block;
+    margin: -28px -28px 22px;
+    border-radius: 13px 13px 0 0;
+    overflow: hidden;
+    background: var(--areia);
+    border-bottom: 1px solid var(--linha);
+}
+
+/* O height:auto tem de vir junto: os atributos width/height do <img>
+   valem como altura fixa e, sem isto, engoliriam o aspect-ratio. */
+.trabalho .capa img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: top center;
+}
+
+/* Print de sistema com menu lateral: ancorado à esquerda, para o corte
+   comer a área vazia da direita e não o menu, que é o que mostra do
+   que o sistema dá conta. */
+.trabalho .capa.esquerda img { object-position: top left; }
+
 .trabalho .etiqueta {
     align-self: flex-start;
     font-size: 0.7rem;
@@ -275,18 +299,6 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
     height: 7px;
     border-radius: 50%;
     background: var(--acao);
-}
-
-/* Cinco trabalhos numa grade de dois em dois deixariam o último
-   sozinho e torto. Este ocupa a linha inteira, e a lista dele vira
-   duas colunas para não sobrar vazio. */
-.trabalho.largo { grid-column: 1 / -1; }
-
-@media (min-width: 781px) {
-    .trabalho.largo ul {
-        columns: 2;
-        column-gap: 34px;
-    }
 }
 
 .trabalho .rodape-cartao { margin-top: auto; }
@@ -501,11 +513,11 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
 <header class="topo">
     <div class="container">
         <div class="topo-barra">
-            <a href="#" class="marca">
+            <a href="#" class="marca" aria-label="Mesquita SaaS">
                 <span class="marca-selo">
-                    <img src="assets/img/MesquitaSaaS.png" alt="Mesquita SaaS">
+                    <img src="assets/img/logoMesquitaSaaS.png" alt="Mesquita SaaS"
+                         width="501" height="120">
                 </span>
-                <span class="marca-nome">Mesquita <span>SaaS</span></span>
             </a>
             <a href="https://wa.me/5531999347032?text=Ol%C3%A1%20Igor%21%20Vi%20sua%20p%C3%A1gina%20e%20queria%20falar%20sobre%20um%20site."
                class="topo-zap" target="_blank" rel="noopener">Falar no WhatsApp</a>
@@ -528,7 +540,7 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
         </div>
 
         <div class="selos">
-            <span><b>5</b> projetos no ar</span>
+            <span><b>6</b> projetos prontos</span>
             <span><b>2 a 5 dias</b> para entregar</span>
             <span><b>Aqui de Alfenas</b> — atendimento pessoal</span>
         </div>
@@ -549,6 +561,11 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
         <div class="grade-trabalhos">
 
             <article class="trabalho">
+                <span class="capa">
+                    <img src="assets/img/trabalhos/guia-comercial-alfenas.png"
+                         alt="Tela do Guia Comercial Alfenas e Região"
+                         width="647" height="475" loading="lazy">
+                </span>
                 <span class="etiqueta no-ar">No ar</span>
                 <h3>Guia Comercial Alfenas e Região</h3>
                 <p>
@@ -563,11 +580,16 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
                 </ul>
                 <div class="rodape-cartao">
                     <a class="ver" href="https://mesquitaigorsaas.github.io/comercioalfenas/"
-                       target="_blank" rel="noopener">Ver o site →</a>
+                       target="_blank" rel="noopener">Entrar na demonstração →</a>
                 </div>
             </article>
 
             <article class="trabalho">
+                <span class="capa">
+                    <img src="assets/img/trabalhos/rogerio-cunha.png"
+                         alt="Tela do site do Rogério Cunha"
+                         width="997" height="573" loading="lazy">
+                </span>
                 <span class="etiqueta no-ar">No ar</span>
                 <h3>Rogério Cunha — Advogado e Escritor</h3>
                 <p>
@@ -581,11 +603,16 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
                 </ul>
                 <div class="rodape-cartao">
                     <a class="ver" href="https://mesquitaigorsaas.github.io/rogeriocunha/"
-                       target="_blank" rel="noopener">Ver o site →</a>
+                       target="_blank" rel="noopener">Entrar na demonstração →</a>
                 </div>
             </article>
 
             <article class="trabalho">
+                <span class="capa esquerda">
+                    <img src="assets/img/trabalhos/achei-vaga.png"
+                         alt="Tela do Achei Vaga, sistema para estacionamentos"
+                         width="997" height="439" loading="lazy">
+                </span>
                 <span class="etiqueta no-ar">No ar</span>
                 <h3>Achei Vaga — sistema para estacionamentos</h3>
                 <p>
@@ -604,6 +631,11 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
             </article>
 
             <article class="trabalho">
+                <span class="capa">
+                    <img src="assets/img/trabalhos/achei-musico.png"
+                         alt="Tela do Achei Músico"
+                         width="1144" height="603" loading="lazy">
+                </span>
                 <span class="etiqueta no-ar">No ar</span>
                 <h3>Achei Músico</h3>
                 <p>
@@ -621,7 +653,12 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
                 </div>
             </article>
 
-            <article class="trabalho largo">
+            <article class="trabalho">
+                <span class="capa">
+                    <img src="assets/img/trabalhos/grao-central.png"
+                         alt="Painel de gestão do Grão Central"
+                         width="997" height="457" loading="lazy">
+                </span>
                 <span class="etiqueta no-ar">No ar</span>
                 <h3>Grão Central — painel de gestão</h3>
                 <p>
@@ -637,6 +674,32 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
                 </ul>
                 <div class="rodape-cartao">
                     <a class="ver" href="https://mesquitaigorsaas.github.io/gestao/"
+                       target="_blank" rel="noopener">Entrar na demonstração →</a>
+                </div>
+            </article>
+
+            <article class="trabalho">
+                <span class="capa">
+                    <img src="assets/img/trabalhos/cardapio-online.png"
+                         alt="Tela do Cardápio Online, modelo para pizzaria"
+                         width="647" height="369" loading="lazy">
+                </span>
+                <span class="etiqueta pronto">Demonstração</span>
+                <h3>Cardápio Online</h3>
+                <p>
+                    Cardápio digital para pizzaria e restaurante: o cliente abre
+                    pelo celular, vê os pratos com foto e preço e pede sem
+                    depender de aplicativo de entrega.
+                </p>
+                <ul>
+                    <li>Pratos com foto, descrição e preço</li>
+                    <li>Pedido cai no WhatsApp ou sai direto na impressora térmica</li>
+                    <li>Promoções em destaque logo na entrada</li>
+                    <li>Contato e redes sociais à mão</li>
+                    <li>Logo e cores trocadas pelas da sua marca</li>
+                </ul>
+                <div class="rodape-cartao">
+                    <a class="ver" href="https://mesquita-saas-pizzaria.github.io/modelo/#hero"
                        target="_blank" rel="noopener">Entrar na demonstração →</a>
                 </div>
             </article>
@@ -811,13 +874,13 @@ h1, h2, h3 { font-family: var(--titulo); line-height: 1.2; letter-spacing: -0.02
 </a>
 
 <script>
-    // Enquanto a logo não estiver em assets/img/MesquitaSaaS.png, o selo mostra
-    // as iniciais em vez do ícone de imagem quebrada.
+    // Se a logo não carregar, o topo escreve o nome em texto em vez de
+    // mostrar um ícone de imagem quebrada.
     const selo = document.querySelector('.marca-selo img');
     selo && selo.addEventListener('error', () => {
         const caixa = selo.parentElement;
-        caixa.textContent = 'MS';
-        caixa.style.cssText += 'display:flex;align-items:center;justify-content:center;font-family:var(--titulo);font-weight:700;color:var(--ciano);font-size:1.05rem;';
+        caixa.innerHTML = 'Mesquita <span style="color:var(--ciano)">SaaS</span>';
+        caixa.style.cssText += 'font-family:var(--titulo);font-weight:700;color:#fff;font-size:1.15rem;';
     });
 </script>
 
